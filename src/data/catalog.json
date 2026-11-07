@@ -6,9 +6,9 @@
       "description": "Berechnet nach Bodenfläche des Raums.",
       "areaBasis": "boden",
       "options": [
-        { "id": "laminat", "name": "Laminat Eiche hell", "price": 0, "unit": "m2", "description": "Im Grundpreis enthalten" },
-        { "id": "fliese", "name": "Feinsteinzeug-Fliese 60 × 60", "price": 30, "unit": "m2", "description": "Matt, Steinoptik" },
-        { "id": "parkett", "name": "Eiche Landhausdiele", "price": 55, "unit": "m2", "description": "Geölt, massiv" }
+        { "id": "laminat", "name": "Laminat Eiche hell", "price": 0, "unit": "m2", "description": "Im Grundpreis enthalten", "swatch": "#D9B98A", "pattern": "dielen-schmal" },
+        { "id": "fliese", "name": "Feinsteinzeug-Fliese 60 × 60", "price": 30, "unit": "m2", "description": "Matt, Steinoptik", "swatch": "#9A9C9E", "pattern": "fliese-raster" },
+        { "id": "parkett", "name": "Eiche Landhausdiele", "price": 55, "unit": "m2", "description": "Geölt, massiv", "swatch": "#A87B4F", "pattern": "dielen-breit" }
       ]
     },
     {
@@ -17,9 +17,9 @@
       "description": "Berechnet nach Wandfläche abzüglich Fenster und Türen.",
       "areaBasis": "wand",
       "options": [
-        { "id": "weiss", "name": "Standardweiß", "price": 0, "unit": "m2", "description": "Im Grundpreis enthalten" },
-        { "id": "farbton", "name": "Wandfarbe nach Wahl", "price": 5, "unit": "m2", "description": "Ein Farbton aus der Kollektion" },
-        { "id": "kalkputz", "name": "Kalkputz", "price": 18, "unit": "m2", "description": "Mineralisch, feine Struktur" }
+        { "id": "weiss", "name": "Standardweiß", "price": 0, "unit": "m2", "description": "Im Grundpreis enthalten", "swatch": "#FFFFFF", "pattern": "glatt" },
+        { "id": "farbton", "name": "Wandfarbe nach Wahl", "price": 5, "unit": "m2", "description": "Ein Farbton aus der Kollektion", "swatch": "#9CB69A", "pattern": "glatt" },
+        { "id": "kalkputz", "name": "Kalkputz", "price": 18, "unit": "m2", "description": "Mineralisch, feine Struktur", "swatch": "#E2D2B0", "pattern": "koernung" }
       ]
     },
     {

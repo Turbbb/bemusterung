@@ -63,7 +63,16 @@ const CategoryPicker = ({ room, category, selectedId, onSelect }: CategoryPicker
               >
                 {selected && <Check className="h-3 w-3" strokeWidth={3} />}
               </span>
-              <span className="pr-6 text-sm font-semibold leading-snug">{option.name}</span>
+              <span className="flex items-center gap-2.5 pr-6">
+                {option.swatch && (
+                  <span
+                    aria-hidden="true"
+                    className="h-6 w-6 shrink-0 rounded-md border border-foreground/15"
+                    style={{ backgroundColor: option.swatch }}
+                  />
+                )}
+                <span className="text-sm font-semibold leading-snug">{option.name}</span>
+              </span>
               {option.description && (
                 <span className="mt-1 text-xs text-muted-foreground">{option.description}</span>
               )}

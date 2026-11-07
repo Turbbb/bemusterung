@@ -41,6 +41,12 @@ export const CatalogOptionSchema = z.object({
   /** Nur für Einheit „stk“: Anzahl Stück (Standard 1) */
   quantity: z.number().int().positive().optional(),
   description: z.string().optional(),
+  /** Farbfeld (Hex), nur Boden und Wand */
+  swatch: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
+  /** Name des Darstellungsmusters im Grundriss, nur Boden und Wand */
+  pattern: z
+    .enum(["dielen-schmal", "dielen-breit", "fliese-raster", "glatt", "koernung"])
+    .optional(),
 });
 
 /** Welche Fläche bei Einheit „m2“ zugrunde gelegt wird. */

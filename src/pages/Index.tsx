@@ -43,7 +43,7 @@ const Index = () => {
       <main className="mx-auto mt-6 grid max-w-6xl gap-8 px-5 lg:grid-cols-[1fr_320px]">
         <div className="min-w-0 space-y-5">
           <RoomTabs rooms={house.rooms} activeId={activeRoomId} onChange={setActiveRoomId} />
-          <RoomPlan room={activeRoom} />
+          <RoomPlan room={activeRoom} selection={activeSelection} />
           {catalog.categories.map((category) => (
             <CategoryPicker
               key={category.id}

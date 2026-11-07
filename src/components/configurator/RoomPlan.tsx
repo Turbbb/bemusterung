@@ -1,15 +1,64 @@
-import type { Room } from "@/data/schemas";
+import type { CatalogOption, Room, Selection } from "@/data/schemas";
+import { catalog } from "@/data";
 import { floorArea, grossWallArea, netWallArea, openingsArea } from "@/calculations";
 import { formatArea, formatNumber } from "@/lib/format";
 import { DoorOpen, RectangleHorizontal } from "lucide-react";
 
 interface RoomPlanProps {
   room: Room;
+  selection: Selection;
 }
 
 const PAD = 1;
+const WALL = 0.24;
 
-const RoomPlan = ({ room }: RoomPlanProps) => {
+const findOption = (categoryId: string, optionId: string | undefined) =>
+  catalog.categories.find((c) => c.id === categoryId)?.options.find((o) => o.id === optionId);
+
+const FloorPatternContent = ({ option }: { option: CatalogOption }) => {
+  const color = option.swatch ?? "#CCCCCC";
+  const line = "rgba(0,0,0,0.28)";
+  switch (option.pattern) {
+    case "dielen-schmal":
+      return (
+        <>
+          <rect width="1.2" height="0.9" fill={color} />
+          <path d="M0 0.3H1.2M0 0.6H1.2M0 0.9H1.2M0.5 0V0.3M0.9 0.3V0.6M0.2 0.6V0.9" stroke={line} strokeWidth="0.015" />
+        </>
+      );
+    case "dielen-breit":
+      return (
+        <>
+          <rect width="1.6" height="0.9" fill={color} />
+          <path d="M0 0.45H1.6M0 0.9H1.6M1 0V0.45M0.4 0.45V0.9" stroke={line} strokeWidth="0.02" />
+        </>
+      );
+    case "fliese-raster":
+      return (
+        <>
+          <rect width="0.6" height="0.6" fill={color} />
+          <path d="M0 0H0.6M0 0H0V0.6" stroke="rgba(255,255,255,0.65)" strokeWidth="0.03" fill="none" />
+        </>
+      );
+    default:
+      return <rect width="1" height="1" fill={color} />;
+  }
+};
+
+const patternSize = (option: CatalogOption) =>
+  option.pattern === "dielen-schmal"
+    ? { w: 1.2, h: 0.9 }
+    : option.pattern === "dielen-breit"
+      ? { w: 1.6, h: 0.9 }
+      : option.pattern === "fliese-raster"
+        ? { w: 0.6, h: 0.6 }
+        : { w: 1, h: 1 };
+
+const RoomPlan = ({ room, selection }: RoomPlanProps) => {
+  const floorOptions = catalog.categories.find((c) => c.id === "boden")?.options ?? [];
+  const wallOptions = catalog.categories.find((c) => c.id === "wand")?.options ?? [];
+  const floor = findOption("boden", selection.boden);
+  const wall = findOption("wand", selection.wand);
   const xs = room.polygon.map((p) => p.x);
   const ys = room.polygon.map((p) => p.y);
   const minX = Math.min(...xs);
@@ -40,11 +89,56 @@ const RoomPlan = ({ room }: RoomPlanProps) => {
             aria-label={`Grundriss ${room.name}`}
           >
             <defs>
-              <pattern id="grid" width="0.5" height="0.5" patternUnits="userSpaceOnUse">
-                <path d="M0.5 0H0V0.5" fill="none" className="stroke-primary/15" strokeWidth="0.02" />
+              {floorOptions.map((o) => {
+                const { w, h } = patternSize(o);
+                return (
+                  <pattern key={o.id} id={`floor-${o.id}`} width={w} height={h} patternUnits="userSpaceOnUse">
+                    <FloorPatternContent option={o} />
+                  </pattern>
+                );
+              })}
+              <pattern id="wall-koernung" width="0.12" height="0.12" patternUnits="userSpaceOnUse">
+                <circle cx="0.03" cy="0.04" r="0.012" fill="rgba(0,0,0,0.35)" />
+                <circle cx="0.09" cy="0.08" r="0.01" fill="rgba(255,255,255,0.7)" />
+                <circle cx="0.07" cy="0.02" r="0.008" fill="rgba(0,0,0,0.25)" />
               </pattern>
             </defs>
-            <polygon points={points} fill="url(#grid)" className="stroke-primary" strokeWidth="0.12" strokeLinejoin="round" />
+            {floorOptions.map((o) => (
+              <polygon
+                key={o.id}
+                points={points}
+                fill={`url(#floor-${o.id})`}
+                className="transition-opacity duration-300 ease-in-out"
+                style={{ opacity: floor?.id === o.id ? 1 : 0 }}
+              />
+            ))}
+            <polygon
+              points={points}
+              fill="none"
+              strokeWidth={WALL}
+              strokeLinejoin="miter"
+              className="transition-[stroke] duration-300 ease-in-out"
+              style={{ stroke: wall?.swatch ?? "#FFFFFF" }}
+            />
+            {wallOptions.map((o) => (
+              <polygon
+                key={o.id}
+                points={points}
+                fill="none"
+                stroke="url(#wall-koernung)"
+                strokeWidth={WALL}
+                strokeLinejoin="miter"
+                className="transition-opacity duration-300 ease-in-out"
+                style={{ opacity: o.pattern === "koernung" && wall?.id === o.id ? 1 : 0 }}
+              />
+            ))}
+            <polygon
+              points={points}
+              fill="none"
+              strokeWidth="0.02"
+              strokeLinejoin="miter"
+              style={{ stroke: "rgba(0,0,0,0.35)" }}
+            />
             <text
               x={minX + width / 2}
               y={minY - 0.35}
@@ -64,17 +158,29 @@ const RoomPlan = ({ room }: RoomPlanProps) => {
             >
               {formatNumber(height)} m
             </text>
+            <rect
+              x={minX + width / 2 - 0.9}
+              y={minY + height / 2 - 0.4}
+              width="1.8"
+              height="0.8"
+              rx="0.4"
+              fill="rgba(255,255,255,0.88)"
+            />
             <text
               x={minX + width / 2}
               y={minY + height / 2 + 0.2}
               textAnchor="middle"
               className="fill-primary font-serif"
-              fontSize="0.6"
+              fontSize="0.5"
             >
               {formatArea(floorArea(room))}
             </text>
           </svg>
         </div>
+        <p className="mt-3 text-center text-xs text-muted-foreground">
+          Boden: <span className="font-semibold text-foreground">{floor?.name ?? "–"}</span> · Wand:{" "}
+          <span className="font-semibold text-foreground">{wall?.name ?? "–"}</span>
+        </p>
       </div>
 
       <div className="flex flex-col justify-between gap-6">
