@@ -18,7 +18,15 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Manrope", "system-ui", "sans-serif"],
+        serif: ["Fraunces", "Georgia", "serif"],
+      },
       colors: {
+        clay: {
+          DEFAULT: "hsl(var(--clay))",
+          soft: "hsl(var(--clay-soft))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

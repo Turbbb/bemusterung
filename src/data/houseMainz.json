@@ -1,0 +1,21 @@
+{
+  "id": "haus-mainz",
+  "name": "Haus Mainz",
+  "rooms": [
+    {
+      "id": "wohnzimmer",
+      "name": "Wohnzimmer",
+      "height": 2.5,
+      "polygon": [
+        { "x": 0, "y": 0 },
+        { "x": 5, "y": 0 },
+        { "x": 5, "y": 4 },
+        { "x": 0, "y": 4 }
+      ],
+      "openings": [
+        { "id": "fenster-1", "name": "Fenster", "width": 1.5, "height": 1.2 },
+        { "id": "tuer-1", "name": "Tür", "width": 1.0, "height": 2.1 }
+      ]
+    }
+  ]
+}

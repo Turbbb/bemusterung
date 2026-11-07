@@ -1,0 +1,48 @@
+{
+  "categories": [
+    {
+      "id": "boden",
+      "name": "Bodenbelag",
+      "description": "Berechnet nach Bodenfläche des Raums.",
+      "areaBasis": "boden",
+      "options": [
+        { "id": "laminat", "name": "Laminat Eiche hell", "price": 0, "unit": "m2", "description": "Im Grundpreis enthalten" },
+        { "id": "fliese", "name": "Feinsteinzeug-Fliese 60 × 60", "price": 30, "unit": "m2", "description": "Matt, Steinoptik" },
+        { "id": "parkett", "name": "Eiche Landhausdiele", "price": 55, "unit": "m2", "description": "Geölt, massiv" }
+      ]
+    },
+    {
+      "id": "wand",
+      "name": "Wandfarbe",
+      "description": "Berechnet nach Wandfläche abzüglich Fenster und Türen.",
+      "areaBasis": "wand",
+      "options": [
+        { "id": "weiss", "name": "Standardweiß", "price": 0, "unit": "m2", "description": "Im Grundpreis enthalten" },
+        { "id": "farbton", "name": "Wandfarbe nach Wahl", "price": 5, "unit": "m2", "description": "Ein Farbton aus der Kollektion" },
+        { "id": "kalkputz", "name": "Kalkputz", "price": 18, "unit": "m2", "description": "Mineralisch, feine Struktur" }
+      ]
+    },
+    {
+      "id": "elektro",
+      "name": "Elektro",
+      "description": "Zusätzliche Ausstattung, berechnet je Stück.",
+      "areaBasis": "keine",
+      "options": [
+        { "id": "elektro-standard", "name": "Standardausstattung", "price": 0, "unit": "pauschal", "description": "Im Grundpreis enthalten" },
+        { "id": "steckdosen", "name": "Zusätzliche Steckdosen", "price": 65, "unit": "stk", "quantity": 4, "description": "Doppelsteckdosen, flächenbündig" },
+        { "id": "einbauleuchten", "name": "LED-Einbauleuchten", "price": 120, "unit": "stk", "quantity": 6, "description": "Dimmbar, warmweiß" }
+      ]
+    },
+    {
+      "id": "extras",
+      "name": "Pauschalpakete",
+      "description": "Feste Preise je Raum.",
+      "areaBasis": "keine",
+      "options": [
+        { "id": "extras-keine", "name": "Kein Paket", "price": 0, "unit": "pauschal" },
+        { "id": "smarthome", "name": "Smart-Home-Vorbereitung", "price": 890, "unit": "pauschal", "description": "Leerrohre, Busleitung, Aktor-Unterverteilung" },
+        { "id": "akustik", "name": "Akustikdecke", "price": 1450, "unit": "pauschal", "description": "Schallabsorbierende Deckenpaneele" }
+      ]
+    }
+  ]
+}
