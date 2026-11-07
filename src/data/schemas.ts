@@ -43,7 +43,9 @@ export const CatalogOptionSchema = z.object({
   description: z.string().optional(),
   /** Farbfeld (Hex), nur Boden und Wand */
   swatch: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
-  /** Name des Darstellungsmusters im Grundriss, nur Boden und Wand */
+  /** Pfad zu einem Produktfoto unter public/materials/, nur Boden und Wand */
+  texture: z.string().startsWith("/materials/").optional(),
+  /** Name des Darstellungsmusters, nur Boden und Wand */
   pattern: z
     .enum(["dielen-schmal", "dielen-breit", "fliese-raster", "glatt", "koernung"])
     .optional(),
